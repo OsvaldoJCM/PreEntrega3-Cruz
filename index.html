@@ -1,24 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.6/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <section class="contenedor">
-        <div class="inicio">
-            <h1>
-                ¿Qué tanto sabes de nuesto sistema solar?
-            </h1>
-            <button class="boton" onclick="participante.verPuntaje();">Ver puntaje</button>
-            <button class="boton" onclick="iniciarTest()">Iniciar test</button>
+    <div class="flex justify-center content-center hero min-h-screen ">
+        <div id="login" class="hero-content w-4/5 rounded-lg flex-col lg:flex-row-reverse glass mask-parallelogram-1 ">
+            <div class="text-center sm:text-left ">
+                <h1 class="text-5xl font-bold"> ¿Qué tanto sabes de nuesto sistema solar?</h1>
+                <p class="py-6">Registrate para participar en un cuestionario con un premio impresionante!</p>
+            </div>
+            <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                <form class="card-body" id="formParticipante">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Nombre</span>
+                        </label>
+                        <input type="text" id="nombre" placeholder="Nombre" class="input input-bordered" required />
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Pais</span>
+                        </label>
+                        <input type="text" id="pais" placeholder="Pais" class="input input-bordered" required />
+                    </div>
+                    <div class="form-control mt-6">
+                        <button class="btn glass">Iniciar</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </section>
+        <div id="opciones" class="glass py-8 px-10 rounded-lg">
+
+            <div class="card shrink-0 w-full max-w-md shadow-2xl bg-base-100 ">
+                <div class="card-body items-center text-center">
+                    <h1 class="text-5xl card-title">¿Estás listo?</h1>
+                    <p class="py-3">Elije qué quieres hacer.</p>
+                    <div class="card-actions justify-center">
+                        <button class="btn btn-lg glass" onclick="iniciarTest()">Iniciar test</button>
+                        <button id="verPuntaje" class="btn btn-lg glass">Ver
+                            puntaje</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
     <script src="js/main.js"></script>
 </body>
 

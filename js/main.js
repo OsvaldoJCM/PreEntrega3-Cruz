@@ -1,30 +1,60 @@
 
 let puntaje = 0;
-
-// Estaría faltando un array y métodos de arrays, los que quieras usar o quizás funciones de orden superior. 
-
-const planetas = ["Mercurio", "Venus", "Tierra", "Marte", "Júpiter", "Saturno", "Urano", "Neptuno"];
+let form = document.getElementById("formParticipante");
 
 class Persona {
-    constructor(nombre, edad, pais) {
+    constructor(nombre, pais) {
         this.nombre = nombre;
-        this.edad = edad;
         this.pais = pais;
     }
     verPuntaje() {
-        alert(this.nombre + " tu puntaje es " + puntaje);
+        alert(`${this.nombre} tu puntaje es ${puntaje}`);
+    }
+
+
+}
+
+
+
+
+window.addEventListener("load", ordenarDivs());
+
+function ordenarDivs() {
+    let datosLocalStorage = JSON.parse(localStorage?.getItem("participante"));
+    if (datosLocalStorage?.nombre) {
+        document.getElementById('login').setAttribute("hidden", false);
+        document.getElementById('opciones').style.display = 'block';
+    } else {
+        document.getElementById('login').removeAttribute("hidden");
+        document.getElementById('opciones').style.display = 'none';
     }
 }
 
 
-let nombre = prompt("¿Cuál es tu nombre?\n\n ");
-let edad = prompt("¿Qué edad tienes?\n\n ");
-let pais = prompt("¿De qué pais eres?\n\n ");
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let formulario = e.target;
+    let nombre = formulario.nombre.value;
+    let pais = formulario.pais.value;
+    const participante = new Persona(nombre, pais);
+    const participanteJSON = JSON.stringify(participante);
+    localStorage.setItem("participante", participanteJSON);
+    // alert(`Bienvenido ${participante.nombre}!!`);
+    ordenarDivs();
 
-const participante = new Persona(nombre, edad, pais);
+
+});
+document.getElementById("verPuntaje").addEventListener("click", () => {
+
+    let datosLocalStorage = JSON.parse(localStorage?.getItem("participante"));
+    const participante = new Persona(datosLocalStorage.nombre, datosLocalStorage.pais);
+    participante.verPuntaje();
+});
 
 
 function iniciarTest() {
+
+    const planetas = ["Mercurio", "Venus", "Tierra", "Marte", "Júpiter", "Saturno", "Urano", "Neptuno"];
     let preguntas = [
         {
             pregunta: "¿De qué color es el sol?",
@@ -35,7 +65,7 @@ function iniciarTest() {
         },
         {
             pregunta: "¿Cuántos planetas hay actualmente en nuestro sistema solar?",
-            opciones: "A : 10 \nB : 9 \nC : " + planetas.length + "",
+            opciones: `A : 10 \nB : 9 \nC :  ${planetas.length}`,
             respuestaCorrecta: "C",
             mensaje:
                 "\n\nPlutón fue considerado durante mucho tiempo el noveno planeta de nuestro sistema solar. Hasta 2006 cuando se redefinió lo que significa ser un planeta y en vista de los nuevos requisitos quedó fuera de los otros 8 con la categoría de planeta menor.",
@@ -51,7 +81,7 @@ function iniciarTest() {
             pregunta: "¿Cual es el planeta que está más cerca del sol?",
             opciones: "A : Marte\nB : Mercurio\nC : Venus",
             respuestaCorrecta: "B",
-            mensaje: "\n\nDespués el sol el orden es : " + planetas.join(", ") + ".",
+            mensaje: `\n\nDespués el sol el orden es : ${planetas.join(", ")}.`,
         },
         {
             pregunta: "¿Cual es el planeta más caliente del sistema solar?",
@@ -67,7 +97,7 @@ function iniciarTest() {
         let respuesta;
         while ((respuesta != "A") && (respuesta != "B") && (respuesta != "C")) {
             // Guarda la respuesta en mayuscula
-            respuesta = prompt("Responde con la letra de cada alternativa\n\n " + p.pregunta + "\n\n" + p.opciones).toUpperCase();
+            respuesta = prompt(`Responde con la letra de cada alternativa\n\n ${p.pregunta} \n\n${p.opciones}`).toUpperCase();
 
             // Si la respuesta es cualquier otra letra o numero, repite la pregunta
             if (respuesta != "A" && respuesta != "B" && respuesta != "C") {
@@ -76,7 +106,7 @@ function iniciarTest() {
                 puntaje += 2;
                 alert("¡Correcto!\n\nTu puntaje es : " + puntaje + p.mensaje)
             } else { // Si no, muestra el mensaje de error con un mensaje del por qué
-                alert("Respuesta incorrecta \n\nEs la alternativa " + p.respuestaCorrecta + p.mensaje)
+                alert(`Respuesta incorrecta \n\nEs la alternativa  ${p.respuestaCorrecta}  ${p.mensaje}`)
 
             }
         }
@@ -90,7 +120,7 @@ function iniciarTest() {
     }
     // Si el puntaje llega a 10, se termina y muestra el mensaje de exito 
     if (puntaje >= 10) {
-        alert("¡Felicitaciones " + participante.nombre + "!\n\n¡Has ganado un viaje al espacio en Estación Espacial Internacional!");
+        alert(`¡Felicitaciones  ${participante.nombre}!\n\n¡Has ganado un viaje al espacio en Estación Espacial Internacional!`);
         puntaje = 0;
     }
 
