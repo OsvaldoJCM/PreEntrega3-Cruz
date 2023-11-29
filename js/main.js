@@ -52,7 +52,7 @@ function ordenarDivs() {
 
         document.getElementById('login').setAttribute("hidden", false);
         document.querySelector("#aviso h3").innerText = `Estimado ${datosLocalStorage?.nombre}`;
-        document.querySelector("#aviso p").innerText = "Según nuestros registros, ya se encuentra inscrito. ¿Desea incribir a otra persona?"
+        document.querySelector("#aviso p").innerText = "Según nuestros registros, ya se encuentra inscrito. ¿Desea inscribir a otra persona?"
         document.getElementById("cerrar").innerText = "Cerrar sesión e incribir a otra persona";
         document.getElementById("aviso").showModal();
         document.getElementById("cerrar").addEventListener("click", () => {
@@ -61,7 +61,6 @@ function ordenarDivs() {
         });
     }
 }
-
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -79,13 +78,6 @@ form.addEventListener("submit", (e) => {
         ordenarDivs();
     });
 
-});
-
-document.getElementById("verPuntaje").addEventListener("click", () => {
-
-    let datosLocalStorage = JSON.parse(localStorage?.getItem("participante"));
-    const participante = new Persona(datosLocalStorage.nombre, datosLocalStorage.pais);
-    participante.verPuntaje();
 });
 
 function iniciar() {
@@ -132,7 +124,6 @@ function evaluar(respuesta, i) {
     });
 
 }
-
 
 function inscripcion(params) {
 
