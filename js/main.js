@@ -40,7 +40,7 @@ class Persona {
         this.pais = pais;
     }
 }
-
+//Al cargar la pagina, ordena los contenedores y si hay datos en localStorage, muesta un mensaje indicando que ya se registro anteriormente
 window.addEventListener("load", ordenarDivs());
 function ordenarDivs() {
     let datosLocalStorage = JSON.parse(localStorage?.getItem("participante"));
@@ -62,39 +62,23 @@ function ordenarDivs() {
     }
 }
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    let formulario = e.target;
-    let nombre = formulario.nombre.value;
-    let pais = formulario.pais.value;
-    const participante = new Persona(nombre, pais);
-    const participanteJSON = JSON.stringify(participante);
-    localStorage.setItem("participante", participanteJSON);
-    document.querySelector("#aviso h3").innerText = `Estimado ${nombre}`;
-    document.querySelector("#aviso p").innerText = "Gracias por tu participación, en los proximos dias nos comunicaremos con usted para hacer las gestión de la matricula"
-    document.getElementById("cerrar").innerText = "Cerrar";
-    document.getElementById("aviso").showModal();
-    document.getElementById("cerrar").addEventListener("click", () => {
-        ordenarDivs();
-    });
-
-});
-
+// Iniciar test
 function iniciar() {
 
     document.getElementById('info').style.display = 'none';
     document.getElementById('test').style.display = 'block';
     document.getElementById("pregunta1").style.display = 'block';
 }
-let radio = document.getElementsByClassName("radio");
 
+//Funcion que espera que sea seleccionada una alternativa  
+let radio = document.getElementsByClassName("radio");
 for (let i = 0; i < radio.length; i++) {
     radio[i].addEventListener("click", function (event) {
         let alternativa = event.target;
         evaluar(alternativa.value, alternativa.name);
     })
 }
-
+//funcion que recibe la alternativa y el cuál pregunta es para mostrar el mensaje de respuesta y pasar a la siguiente
 function evaluar(respuesta, i) {
 
 
@@ -125,9 +109,29 @@ function evaluar(respuesta, i) {
 
 }
 
+// Mostrar formulario de inscripcion
 function inscripcion(params) {
 
     document.getElementById('login').removeAttribute("hidden");
     document.getElementById('mensajeInscripcion').innerText = `Regístrate ${10 * puntaje}% de descuento por tu participación en el test de nivelación!`;
     document.getElementById('opciones').style.display = 'none';
 }
+
+// Se espera que el fomrulario se envie para guardar los datos en localStorage
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let formulario = e.target;
+    let nombre = formulario.nombre.value;
+    let pais = formulario.pais.value;
+    const participante = new Persona(nombre, pais);
+    const participanteJSON = JSON.stringify(participante);
+    localStorage.setItem("participante", participanteJSON);
+    document.querySelector("#aviso h3").innerText = `Estimado ${nombre}`;
+    document.querySelector("#aviso p").innerText = "Gracias por tu participación, en los proximos dias nos comunicaremos con usted para hacer las gestión de la matricula"
+    document.getElementById("cerrar").innerText = "Cerrar";
+    document.getElementById("aviso").showModal();
+    document.getElementById("cerrar").addEventListener("click", () => {
+        ordenarDivs();
+    });
+
+});
